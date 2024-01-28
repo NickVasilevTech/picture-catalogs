@@ -53,7 +53,8 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
-        $userCatalogs = Catalog::getCatalogsByUserId(Auth::user()->id, true);
+        $userCatalogs = Catalog::getCatalogsByUserId(Auth::user()->id, true, true);
+        // $userCatalogs = $userCatalogs->all();
         Session::put('user_catalogs', $userCatalogs);
     }
 

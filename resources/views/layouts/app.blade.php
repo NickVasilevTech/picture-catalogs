@@ -15,12 +15,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        @yield('styles')
         <!-- Bootstrap javascript-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="js/scripts.js"></script>
-        @yield('scripts')
     </head>
     <body class="font-sans antialiased d-flex flex-column min-vh-100">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -75,7 +75,7 @@
             {{-- @endif --}}
             <!-- Page Content -->
             <main>
-                <div class="h-100 d-flex 'flex-column align-items-center justify-content-center">
+                <div class="h-100 d-flex flex-column align-items-center justify-content-center">
                 @yield('content')
                 </div>
             </main>
@@ -84,6 +84,42 @@
         <footer class="py-5 bg-dark mt-auto">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Picture Catalogs 2024</p></div>
         </footer>
+        <!-- Modal for uploading a picture -->
+        <div class="modal" id="errors-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{__('Error')}}</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        @if ($errors->any())
+                            <div>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li class="invalid-feedback d-block">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary me-4" data-bs-dismiss="modal">{{__('Close')}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(".modal#errors-modal").on("hidden.bs.modal", function(){
+                $(".modal-body").html("");
+            });
+        </script>
+        @yield('scripts')
     </body>
 </html>
 

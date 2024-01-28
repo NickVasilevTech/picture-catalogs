@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="container px-1 mt-5">
         <img class="card-img-top img-fluid" src="{{asset('storage/user_pictures/'.$picture['filename'])}}"
@@ -27,15 +28,35 @@
             @each('pictures.partial.comment', $comments, 'comment')
         </div>
     </div>
+@endsection
+
+@section('styles')
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
     <!-- Summernote WYSIWYG Editor -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script type="text/javascript">
         addEventListener("DOMContentLoaded", (event) => {
             $('#comment-body').summernote({
-                height: 200
+                height: 200,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link']],
+                    ['view', ['fullscreen', 'help']]
+                ],
+                callbacks: {
+                    onImageUpload: function (data) {
+                        data.pop();
+                    }
+                }
             });
         });
     </script>

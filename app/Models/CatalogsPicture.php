@@ -12,11 +12,11 @@ class CatalogsPicture extends Model
 
     public function catalog(): BelongsTo
     {
-        return $this->belongsTo( Catalog::class );
+        return $this->belongsTo(Catalog::class);
     }
 
     public function picture(): BelongsTo
     {
-        return $this->belongsTo( Picture::class );
+        return $this->belongsTo(Picture::class);
     }
 }

@@ -20,19 +20,21 @@ class ProfileController extends Controller
         } else {
             $user = $request->user();
         }
+
         $pictures = Picture::getPicturesByUserId($user->id);
         $catalogs = Catalog::getCatalogsByUserId($user->id);
-        $catalogThumbnails = [];
+
         foreach($catalogs as $catalog) {
             $catalog->thumbnail = Catalog::getThumbnailFilename($catalog->id);
         }
+
         return view('profile.view', [
-            'username'   => $user->username,
+            'username' => $user->username,
             'name' => $user->name,
             'pictures' => $pictures,
             'catalogs' => $catalogs,
             // Setup a default black banner if no banner set
-            'customBanner' => $user->profile_banner??''
+            'customBanner' => $user->profile_banner ?? ''
         ]);
     }
 }

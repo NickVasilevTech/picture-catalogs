@@ -39,24 +39,25 @@ class Picture extends Model
             ->join('users', 'pictures.user_id', '=', 'users.id')
             ->orderBy('created_at', 'desc');
 
-        if ($limit > 0)
+        if ($limit > 0) {
             $query->limit($limit);
+        }
 
-        return $query->get();
+        return $query->paginate(4);
     }
 
-    public static function getLatestPictures(int $limit = 8)
+    public static function getLatestPictures(int $limit = 0)
     {
         $query = DB::table('pictures')
             ->select('pictures.id', 'pictures.filename', 'pictures.user_id', 'pictures.created_at', 'users.username as authorName')
-            // ->where('user_id', '=', $userId)
             ->join('users', 'pictures.user_id', '=', 'users.id')
             ->orderBy('created_at', 'desc');
 
-        if ($limit > 0)
+        if ($limit > 0) {
             $query->limit($limit);
+        }
 
-        return $query->get();
+        return $query->paginate(4);
     }
 
     public static function getCommentsByPictureId(int $pictureId, int $limit = 0)
@@ -67,8 +68,9 @@ class Picture extends Model
             ->join('users', 'comments.user_id', '=', 'users.id')
             ->orderBy('created_at');
 
-        if ($limit > 0)
+        if ($limit > 0) {
             $query->limit($limit);
+        }
 
         return $query->get();
     }

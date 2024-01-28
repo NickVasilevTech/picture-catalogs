@@ -48,6 +48,6 @@ class User extends Authenticatable
 
     public function subscriptions(): HasMany
     {
-        return $this->hasMany( Picture::class );
+        return $this->hasMany(Picture::class);
     }
 }

@@ -31,7 +31,7 @@ class Catalog extends Model
         return $this->hasMany( CatalogsPicture::class );
     }
 
-    public static function getCatalogsByUserId(int $userId, bool $withPictureIds = false, int $limit = 0)
+    public static function getCatalogsByUserId(int $userId, bool $withPictureIds = false, bool $asArray = false, int $limit = 0)
     {
         $query = DB::table('catalogs')
         ->select('catalogs.id', 'catalogs.name', 'users.username as authorName')
@@ -39,8 +39,9 @@ class Catalog extends Model
         ->join('users', 'catalogs.user_id', '=', 'users.id')
         ->orderBy('catalogs.created_at', 'desc');
 
-        if ($limit > 0)
+        if ($limit > 0) {
             $query->limit($limit);
+        }
 
         if ($withPictureIds) {
             $query->leftJoin('catalogs_pictures', 'catalogs.id', '=', 'catalogs_pictures.catalog_id')
@@ -48,7 +49,7 @@ class Catalog extends Model
             ->groupBy('catalogs.id');
         }
 
-        return $query->get();
+        return ($asArray)? $query->get()->toArray() : $query->get();
     }
 
     public static function getPicturesInCatalog(int $catalogId, bool $withFilenamesAndAuthors = false)

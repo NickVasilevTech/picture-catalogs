@@ -22,11 +22,11 @@ class Comment extends Model
 
     public function picture(): BelongsTo
     {
-        return $this->belongsTo( Picture::class );
+        return $this->belongsTo(Picture::class);
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo( User::class );
+        return $this->belongsTo(User::class);
     }
 }

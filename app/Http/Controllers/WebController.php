@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Route;
 
 class WebController extends Controller
 {
-    function home() {
+    public function home() {
         $pictures = Picture::getLatestPictures();
+
         return view('welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
